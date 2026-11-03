@@ -2,18 +2,17 @@
 
 require 'cgi/escape'
 require 'lowkey'
+
 require_relative '../support/queries'
 
 module Antlers
   module Variables
-    extend Queries
-
     # Evaluation limited to the following for security and to stop a templating language becoming a programming language.
     #  1. A value ('string', 3, 1.5, true, nil or :symbol)
     #  2. Invalid string ("Hi #{name}", 'it's', 'a' + 'b')
     #  3. An instance variable
     #  4. A method call/local variable
-    #  5. A method chain
+    #  5. A nested path (a hash's key, an array's or string's basic methods, an object's public method)
     def evaluate(value:, current_binding:, escape: true)
       result = result(value:, current_binding:)
 
@@ -34,10 +33,10 @@ module Antlers
     private
 
     def variable(value:, current_binding:)
-      name, *chain = value.split('.')
+      name, *path = value.split('.')
 
       result = method_var(name:, current_binding:)
-      return method_chain(result:, chain:) if chain.count > 0
+      return Queries.read_path(value: result, path:) if path.count > 0
 
       result
     end
@@ -48,12 +47,6 @@ module Antlers
       return current_binding.receiver.send(name.to_sym) if current_binding.receiver.respond_to?(name.to_sym)
 
       nil
-    end
-
-    def method_chain(result:, chain:)
-      chain.reduce(result) do |result, method_call|
-        result&.send(method_call.to_sym)
-      end
     end
   end
 end

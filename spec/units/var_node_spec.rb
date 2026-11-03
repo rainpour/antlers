@@ -32,6 +32,22 @@ class MockVarClass
     false
   end
 
+  def links
+    { 'docs' => 'https://a.io', code: 'https://b.io' }
+  end
+
+  def tags
+    @tags ||= %w[ruby markdown]
+  end
+
+  def secretive
+    Class.new do
+      private
+
+      def secret = 'private'
+    end.new
+  end
+
   def instance_binding
     binding
   end
@@ -70,6 +86,33 @@ RSpec.describe Antlers::VarNode do
 
       it 'evaluates a method chain' do
         expect(var_node.render(current_binding: mock_instance.instance_binding)).to eq('true')
+      end
+    end
+
+    context 'with a nested path into data' do
+      def render(value) = described_class.new(value:).render(current_binding: mock_instance.instance_binding)
+
+      it "reads a hash's string or symbol keys and an array's indices" do
+        expect([render('links.docs'), render('links.code'), render('tags.1'), render('tags.9')])
+          .to eq(['https://a.io', 'https://b.io', 'markdown', ''])
+      end
+
+      it "reads a list's first, last and size, and a hash's first and size" do
+        expect([render('tags.first'), render('tags.last'), render('tags.size'), render('links.size')]).to eq(%w[ruby markdown 2 2])
+        expect(Antlers::Queries.read_path(value: mock_instance.links, path: ['first'])).to eq(['docs', 'https://a.io'])
+      end
+
+      it "reads a string's upcase and downcase" do
+        expect([render('method_call.upcase'), render('method_call.downcase')]).to eq(['METHOD CALL', 'method call'])
+      end
+
+      it "doesn't call other methods on hashes, arrays or plain values" do
+        expect([render('tags.clear'), render('links.last'), render('method_call.reverse'), render('draft.to_s')]).to all(eq(''))
+        expect(mock_instance.tags).to eq(%w[ruby markdown])
+      end
+
+      it "doesn't call an object's private methods" do
+        expect { render('secretive.secret') }.to raise_error(NoMethodError)
       end
     end
 
