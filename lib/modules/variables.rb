@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'erb'
+require 'cgi/escape'
 require 'lowkey'
 require_relative '../support/queries'
 
@@ -17,7 +17,7 @@ module Antlers
     def evaluate(value:, current_binding:, escape: true)
       result = result(value:, current_binding:)
 
-      return ERB::Util.html_escape(result) if escape
+      return CGI.escapeHTML(result.to_s) if escape
 
       result
     end

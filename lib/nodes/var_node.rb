@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'cgi/escape'
 require_relative '../interfaces/leaf_node'
 require_relative '../modules/variables'
 require_relative '../antlers/translations'
@@ -23,7 +24,7 @@ module Antlers
       return evaluate(value: @value, current_binding:, escape: !@raw).to_s unless @translatable
 
       result = Translations.translate(result(value: @value, current_binding:))
-      (@raw ? result : ERB::Util.html_escape(result)).to_s
+      (@raw ? result : CGI.escapeHTML(result.to_s)).to_s
     end
 
     class << self

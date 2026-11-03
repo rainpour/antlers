@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
 
-  spec.add_dependency 'erb'
   spec.add_dependency 'lowkey', '>= 0.7.0'
   spec.add_dependency 'plugs'
 end
