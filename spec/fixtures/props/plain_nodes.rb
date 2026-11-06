@@ -3,7 +3,7 @@
 # Plain Ruby classes, not LowNodes, which Lowkey hasn't loaded.
 module Simple
   # Takes a prop in initialize and another in render.
-  class PropNode
+  class SoloNode
     def initialize(limit: 5)
       @limit = limit
     end

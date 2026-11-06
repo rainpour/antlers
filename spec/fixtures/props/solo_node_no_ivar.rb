@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Ruby
-  class PropNodeNoIvar < LowNode
+  class SoloNodeNoIvar < LowNode
     def render
       @ivar
     end

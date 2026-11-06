@@ -11,7 +11,7 @@ module Antlers
       @name = name
     end
 
-    def render(current_binding: nil, parent_binding: nil, slot_node: nil, namespace: nil, metadata: {})
+    def render(current_binding: nil, parent_binding: nil, slot_node: nil, namespace: nil, context: {})
       raise NotImplementedError
     end
 

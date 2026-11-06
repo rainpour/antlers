@@ -21,7 +21,7 @@ module Antlers
       @namespace = namespace
     end
 
-    def render(current_binding: nil, parent_binding: nil, slot_node: nil, metadata: {})
+    def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       props = evaluate_props(props: @props, current_binding:)
       event = possible_render_event(props:, current_binding:)
 
@@ -36,13 +36,13 @@ module Antlers
 
       # Without a class template, a component's own render method can receive its slot's rendered children as slot:.
       render_method = instance.method(:render)
-      keywords[:slot] = slot(current_binding:, metadata:) if Keywords.takes?(render_method, :slot)
+      keywords[:slot] = slot(current_binding:, context:) if Keywords.takes?(render_method, :slot)
       instance.render(**Keywords.accepted(render_method, keywords))
     end
 
     # The children rendered in the binding the slot is in, like a yield in a template renders them.
-    def slot(current_binding:, metadata:)
-      @children.map { |child| child.render(current_binding:, parent_binding: current_binding, slot_node: self, metadata:) || '' }.join
+    def slot(current_binding:, context:)
+      @children.map { |child| child.render(current_binding:, parent_binding: current_binding, slot_node: self, context:) || '' }.join
     end
 
     def end_name

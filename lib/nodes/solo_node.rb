@@ -6,7 +6,7 @@ require_relative '../modules/namespace'
 require_relative '../modules/props'
 
 module Antlers
-  class PropNode < LeafNode
+  class SoloNode < LeafNode
     include Namespace
     include Props # Immediate parent ancestor that super() refers to.
 
@@ -16,7 +16,7 @@ module Antlers
       @namespace = namespace
 
       # A class defined in a file that hasn't loaded yet is pending until "Antlers.resolve_nodes" or its first render.
-      PropNode.pending << self unless resolve
+      SoloNode.pending << self unless resolve
     end
 
     # Whether the prop's class is defined.
@@ -25,7 +25,7 @@ module Antlers
     end
 
     # Classes referenced via "<{ MyNode }>" must implement class/instance and render/render_template methods (See lownode).
-    def render(current_binding: nil, parent_binding: nil, slot_node: nil, metadata: {})
+    def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       props = evaluate_props(props: @props, current_binding:)
       event = possible_render_event(props:, current_binding:)
 
@@ -52,11 +52,11 @@ module Antlers
       end
 
       def match?(segment:)
-        segment[:prop]
+        segment[:solo]
       end
 
       def build(segment:, namespace:, **)
-        new(name: segment[:prop], props: segment[:props], namespace:)
+        new(name: segment[:solo], props: segment[:props], namespace:)
       end
     end
 

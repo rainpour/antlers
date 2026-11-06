@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+- **Breaking:** `PropNode` is `SoloNode`, and its element and lexeme are `:solo`, as every node can have props, while a solo node is one without a slot, like `<{ Card title='Hi' }>`
+- **Breaking:** `metadata:` is `context:` in `Antlers.render` and every node's `render`, as it's whatever the app passes down to its nodes
+
 ## 1.4.0
 
 ### Changed

@@ -3,7 +3,7 @@
 require 'lownode'
 
 module RBX
-  class PropNodeVar < LowNode
+  class SoloNodeVar < LowNode
     def render(var:)
       <strong>{var}</strong>
     end

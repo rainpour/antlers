@@ -20,7 +20,7 @@ module Antlers
       @translatable = Queries.translatable?(value.strip)
     end
 
-    def render(current_binding: nil, parent_binding: nil, slot_node: nil, metadata: {})
+    def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       return evaluate(value: @value, current_binding:, escape: !@raw).to_s unless @translatable
 
       result = Translations.translate(result(value: @value, current_binding:))

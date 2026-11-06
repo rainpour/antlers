@@ -11,7 +11,7 @@ module RBX
 
     def render
       <{ LayoutNode: }>
-        <{ PropNodeVar var=@ivar }>
+        <{ SoloNodeVar var=@ivar }>
       <{ :LayoutNode }>
     end
   end

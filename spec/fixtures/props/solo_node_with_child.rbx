@@ -3,13 +3,13 @@
 require 'lownode'
 
 module RBX
-  class PropNodeWithChild < LowNode
+  class SoloNodeWithChild < LowNode
     def initialize
       @ivar = 'Parent Variable'
     end
 
     def render
-      <html><{ PropNodeVar var=@ivar }></html>
+      <html><{ SoloNodeVar var=@ivar }></html>
     end
 
     # Usuallly a low node instance calls an antlers node, passing in the instance's binding.

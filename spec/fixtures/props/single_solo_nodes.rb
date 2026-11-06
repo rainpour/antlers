@@ -4,7 +4,7 @@ require 'lownode'
 
 module Ruby
   # Takes one prop in initialize.
-  class InitializePropNode < LowNode
+  class InitializeSoloNode < LowNode
     def initialize(limit: 5)
       super()
       @limit = limit
@@ -16,7 +16,7 @@ module Ruby
   end
 
   # Takes one prop in render.
-  class RenderPropNode < LowNode
+  class RenderSoloNode < LowNode
     def render(limit: 5)
       "#{limit.inspect} (#{limit.class})"
     end

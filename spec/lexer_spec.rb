@@ -6,7 +6,7 @@ require_relative '../lib/antlers/lexer'
 RSpec.describe Antlers::Lexer do
   subject(:lexer) { described_class.new(lexeme_types:) }
 
-  let(:lexeme_types) { Antlers::Elements[:html, :form, :for, :if, :prop, :slot, :yield, :var][:lexeme] }
+  let(:lexeme_types) { Antlers::Elements[:html, :form, :for, :if, :solo, :slot, :yield, :var][:lexeme] }
 
   describe '.parse' do
     context 'when just HTML' do
@@ -28,7 +28,7 @@ RSpec.describe Antlers::Lexer do
 
       it 'only splits on keywords that are whole words' do
         expect(lexer.parse(template:)).to eq(
-          [{ prop: 'Plain::Card', props: { size: '2' } }, { slot_def: 'Admin::Card' }, 'x', { slot_end: 'Admin::Card' }]
+          [{ solo: 'Plain::Card', props: { size: '2' } }, { slot_def: 'Admin::Card' }, 'x', { slot_end: 'Admin::Card' }]
         )
       end
     end
@@ -84,12 +84,12 @@ RSpec.describe Antlers::Lexer do
     context 'with a prop node' do
       let(:template) do
         <<~RUBY
-          <{ PropNode prop_with_val=mock_val prop_without_val }>
+          <{ SoloNode prop_with_val=mock_val prop_without_val }>
         RUBY
       end
 
       let(:sequence) do
-        [{ prop: 'PropNode', props: { prop_with_val: 'mock_val', prop_without_val: nil } }]
+        [{ solo: 'SoloNode', props: { prop_with_val: 'mock_val', prop_without_val: nil } }]
       end
 
       it 'returns sequence' do
@@ -100,7 +100,7 @@ RSpec.describe Antlers::Lexer do
         let(:template) do
           <<~RUBY
             <div class="{@mock_var}">
-              <{ PropNode prop_with_val=mock_val prop_without_val }>
+              <{ SoloNode prop_with_val=mock_val prop_without_val }>
             </div>
           RUBY
         end
@@ -108,7 +108,7 @@ RSpec.describe Antlers::Lexer do
         let(:sequence) do
           [
             '<div class="', { var: '@mock_var' }, "\">\n  ",
-              { prop: 'PropNode', props: { prop_with_val: 'mock_val', prop_without_val: nil } },
+              { solo: 'SoloNode', props: { prop_with_val: 'mock_val', prop_without_val: nil } },
             "\n</div>"
           ]
         end
@@ -120,11 +120,11 @@ RSpec.describe Antlers::Lexer do
     end
 
     context 'with a quoted prop containing spaces' do
-      let(:template) { %(<{ PropNode title='A title = good' label="for: in: all" size=2 }>) }
+      let(:template) { %(<{ SoloNode title='A title = good' label="for: in: all" size=2 }>) }
 
       it 'keeps the quoted value whole' do
         expect(lexer.parse(template:)).to eq(
-          [{ prop: 'PropNode', props: { title: "'A title = good'", label: '"for: in: all"', size: '2' } }]
+          [{ solo: 'SoloNode', props: { title: "'A title = good'", label: '"for: in: all"', size: '2' } }]
         )
       end
     end
@@ -261,13 +261,13 @@ RSpec.describe Antlers::Lexer do
       let(:template) do
         <<~RUBY
           <{ SlotNode: }>
-            <{ PropNode }>
+            <{ SoloNode }>
           <{ :SlotNode }
         RUBY
       end
 
       it 'returns sequence' do
-        expect(lexer.parse(template:)).to eq([{ slot_def: 'SlotNode' }, "\n  ", { prop: 'PropNode' }, "\n", { slot_end: 'SlotNode' }])
+        expect(lexer.parse(template:)).to eq([{ slot_def: 'SlotNode' }, "\n  ", { solo: 'SoloNode' }, "\n", { slot_end: 'SlotNode' }])
       end
     end
 

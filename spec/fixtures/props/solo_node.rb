@@ -3,7 +3,7 @@
 require 'lownode'
 
 module Ruby
-  class PropNode < LowNode
+  class SoloNode < LowNode
     def initialize
       @ivar = 'Instance Variable'
     end

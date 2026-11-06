@@ -3,7 +3,7 @@
 require_relative '../interfaces/lexeme'
 
 module Antlers
-  module PropLexeme
+  module SoloLexeme
     include Lexeme
     extend self
 
@@ -12,9 +12,9 @@ module Antlers
     end
 
     def lexeme(name:, props:, **)
-      prop = { prop: name }
-      prop[:props] = props(props) unless props.empty?
-      prop
+      solo = { solo: name }
+      solo[:props] = props(props) unless props.empty?
+      solo
     end
   end
 end

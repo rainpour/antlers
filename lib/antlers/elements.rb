@@ -70,18 +70,18 @@ module Antlers
       end
     end
 
-    plug(:prop) do
+    plug(:solo) do
       plug(:lexeme) do
         lazy do
-          require_relative '../lexemes/prop_lexeme'
-          PropLexeme
+          require_relative '../lexemes/solo_lexeme'
+          SoloLexeme
         end
       end
 
       plug(:node) do
         lazy do
-          require_relative '../nodes/prop_node'
-          PropNode
+          require_relative '../nodes/solo_node'
+          SoloNode
         end
       end
     end
