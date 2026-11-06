@@ -37,7 +37,7 @@ PATH
 PATH
   remote: .
   specs:
-    antlers (1.4.0)
+    antlers (1.5.0)
       lowkey (>= 0.7.0)
       plugs
 
@@ -58,7 +58,7 @@ GEM
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
-    lowtype (1.6.2)
+    lowtype (1.7.0)
       dirload
       expressions (~> 0.1)
       lowkey (>= 0.7.1)
@@ -142,7 +142,7 @@ DEPENDENCIES
   rubocop
 
 CHECKSUMS
-  antlers (1.4.0)
+  antlers (1.5.0)
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   bundler (4.0.18) sha256=02d9a17429de1847b4e0c9f27a9ee4b20c0a74c0a641b4e77195d6019e3618ac
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
@@ -158,7 +158,7 @@ CHECKSUMS
   lowevent (0.8.2)
   lowkey (0.7.1)
   lownode (0.5.6)
-  lowtype (1.6.2) sha256=920fde717a8ff689b2cf5d90697368a375ffa645fa34bfb1620c650c4bc98055
+  lowtype (1.7.0) sha256=7dd594bbf3fbf9302b426f0f78d89e6b824a3deac1afa5d1dc0cc9412c703810
   observers (1.1.0) sha256=339ce602a5715e35a1d8574e6352d17eb53933c30f7e9d3c3af1beb5bcd21fb0
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
