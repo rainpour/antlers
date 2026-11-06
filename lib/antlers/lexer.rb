@@ -59,8 +59,9 @@ module Antlers
 
       name, props, keywords = parse_antlers_segment(segment:)
 
-      lexeme = @lexeme_types.find { it.match?(name:, keywords:) }
-      return lexeme.lexeme(name:, props:, keywords:) if lexeme
+      # The segment is the directive as it's written, for a lexeme that reads it its own way.
+      lexeme = @lexeme_types.find { it.match?(name:, keywords:, segment:) }
+      return lexeme.lexeme(name:, props:, keywords:, segment:) if lexeme
 
       return @var_lexeme.lexeme(segment:, raw: true) if @var_lexeme && deerheads?(segments:)
 

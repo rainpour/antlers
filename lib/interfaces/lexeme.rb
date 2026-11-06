@@ -4,7 +4,7 @@ module Antlers
   module Lexeme
     KEYWORDS = [].freeze
 
-    def match?(name: nil, keywords: {}) = false
+    def match?(name: nil, keywords: {}, segment: nil) = false
 
     def lexeme(name:, props:, keywords:, segment: nil, raw: false)
       raise NotImplementedError

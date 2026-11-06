@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Breaking:** `PropNode` is `SoloNode`, and its element and lexeme are `:solo`, as every node can have props, while a solo node is one without a slot, like `<{ Card title='Hi' }>`
+- A lexeme's `match?` and `lexeme` get the directive as it's written, as `segment:`, so an app can read its own syntax
 - **Breaking:** `metadata:` is `context:` in `Antlers.render` and every node's `render`, as it's whatever the app passes down to its nodes
 
 ## 1.4.0
