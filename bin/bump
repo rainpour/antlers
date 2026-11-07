@@ -7,6 +7,7 @@
 # other changes out of it.
 #   bin/bump
 #   bin/bump --patch
+#   bin/bump -p
 #   bin/bump --major
 
 Dir.chdir(File.expand_path('..', __dir__))
@@ -16,7 +17,7 @@ version = source[/VERSION = '(\d+\.\d+\.\d+)'/, 1] or abort("There's no VERSION 
 
 major, minor, patch = version.split('.').map(&:to_i)
 bumped = "#{major}.#{minor + 1}.0"
-bumped = "#{major}.#{minor}.#{patch + 1}" if ARGV.include?('--patch')
+bumped = "#{major}.#{minor}.#{patch + 1}" if ARGV.intersect?(%w[--patch -p])
 bumped = "#{major + 1}.0.0" if ARGV.include?('--major')
 File.write(path, source.sub("VERSION = '#{version}'", "VERSION = '#{bumped}'"))
 puts "Bumped #{version} to #{bumped}"
