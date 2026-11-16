@@ -8,15 +8,19 @@ module Antlers
   class Lexer
     # Only matches when the rest of the segment has balanced quotes, so title='A title = good' isn't split inside its quotes.
     OUTSIDE_QUOTES = /(?=(?:[^'"]|'[^']*'|"[^"]*")*\z)/
+    PROPS = /(=)#{OUTSIDE_QUOTES}|\s+#{OUTSIDE_QUOTES}/
+    DELIMITERS = /(#{Regexp.union('<{', '}>')})/
+    VAR_DELIMITERS = /(#{Regexp.union('<{', '}>', '{', '}')})/
+    # Keywords are compiled once for each set of lexemes, as a lexer's made for each template.
+    KEYWORDS = Hash.new { |keywords, words| keywords[words] = /(?<!\S)(#{Regexp.union(words)})(?!\S)#{OUTSIDE_QUOTES}/ }
 
     def initialize(lexeme_types:)
       @lexeme_types = lexeme_types.to_a
       @var_lexeme = @lexeme_types.find { it == VarLexeme }
 
-      @delimiters = ['<{', '}>']
-      @delimiters = [*@delimiters, '{', '}'] if @var_lexeme
-
-      @keywords = @lexeme_types.flat_map { |lexeme| lexeme.const_get(:KEYWORDS) }
+      @delimiters = DELIMITERS
+      @delimiters = VAR_DELIMITERS if @var_lexeme
+      @keywords = KEYWORDS[@lexeme_types.flat_map { |lexeme| lexeme.const_get(:KEYWORDS) }]
       @cursor = 0
     end
 
@@ -26,7 +30,7 @@ module Antlers
 
       # Split on delimiters and retain capture groups.
       # Whitespace inside the template is kept, but not around it, like the indentation of a template in a method body.
-      segments = template.strip.split(/(#{Regexp.union(@delimiters)})/)
+      segments = template.strip.split(@delimiters)
 
       until segments[@cursor].nil?
         if (segment = antlers_segment(segments:))
@@ -71,8 +75,8 @@ module Antlers
     # Keywords are whole words, so a name like "Plain::Card" isn't split on the "in:" in it.
     # Props are split into tokens like ['title', '=', "'A title'", 'size', '=', '2'].
     def parse_antlers_segment(segment:)
-      name_and_props, *keywords = segment.split(/(?<!\S)(#{Regexp.union(@keywords)})(?!\S)#{OUTSIDE_QUOTES}/)
-      name, *props = name_and_props.split(/(=)#{OUTSIDE_QUOTES}|\s+#{OUTSIDE_QUOTES}/).reject(&:empty?)
+      name_and_props, *keywords = segment.split(@keywords)
+      name, *props = name_and_props.split(PROPS).reject(&:empty?)
       [name, props, parse_keywords(keywords:)]
     end
 
