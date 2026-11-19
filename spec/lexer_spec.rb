@@ -37,7 +37,7 @@ RSpec.describe Antlers::Lexer do
       let(:template) { '<{ for: item in: items }>{item}<{ :for }>' }
 
       it 'still splits its keywords' do
-        expect(lexer.parse(template:)).to eq([{ for_def: 'item', in: 'items' }, { var: 'item' }, { for_end: 'level_1' }])
+        expect(lexer.parse(template:)).to eq([{ for_def: 'item', in: 'items' }, { var: 'item' }, { for_end: :nameless }])
       end
     end
 
@@ -157,7 +157,7 @@ RSpec.describe Antlers::Lexer do
       end
 
       let(:sequence) do
-        [{ for_def: 'value', in: 'array' }, "\n  ", { var: 'value' }, "\n", { for_end: 'level_1' }]
+        [{ for_def: 'value', in: 'array' }, "\n  ", { var: 'value' }, "\n", { for_end: :nameless }]
       end
 
       it 'returns sequence' do
@@ -174,7 +174,7 @@ RSpec.describe Antlers::Lexer do
         end
 
         let(:sequence) do
-          [{ for_def: 'value', key: 'key', in: 'hash' }, "\n  ", { var: 'item' }, "\n", { for_end: 'level_1' }]
+          [{ for_def: 'value', key: 'key', in: 'hash' }, "\n  ", { var: 'item' }, "\n", { for_end: :nameless }]
         end
 
         it 'returns sequence' do
@@ -194,7 +194,7 @@ RSpec.describe Antlers::Lexer do
         end
 
         let(:sequence) do
-          ["<html>\n  ", { for_def: 'item', in: 'items' }, "\n    ", { var: 'item' }, "\n  ", { for_end: 'level_1' }, "\n</html>"]
+          ["<html>\n  ", { for_def: 'item', in: 'items' }, "\n    ", { var: 'item' }, "\n  ", { for_end: :nameless }, "\n</html>"]
         end
 
         it 'returns sequence' do
@@ -213,7 +213,7 @@ RSpec.describe Antlers::Lexer do
       end
 
       let(:sequence) do
-        [{ form_def: %('/submit') }, "\n  <button>Submit</button>\n", { form_end: 'level_1' }]
+        [{ form_def: %('/submit') }, "\n  <button>Submit</button>\n", { form_end: :nameless }]
       end
 
       it 'returns sequence' do
@@ -231,7 +231,7 @@ RSpec.describe Antlers::Lexer do
       end
 
       let(:sequence) do
-        [{ form_def: 'user' }, "\n  <button>Submit</button>\n", { form_end: 'level_1' }]
+        [{ form_def: 'user' }, "\n  <button>Submit</button>\n", { form_end: :nameless }]
       end
 
       it 'returns sequence' do
@@ -244,7 +244,7 @@ RSpec.describe Antlers::Lexer do
 
       it 'returns sequence' do
         expect(lexer.parse(template:)).to eq(
-          [{ form_def: %('/search'), method: 'GET', attributes: { 'class' => 'search', 'data-role' => 'find' } }, { form_end: 'level_1' }]
+          [{ form_def: %('/search'), method: 'GET', attributes: { 'class' => 'search', 'data-role' => 'find' } }, { form_end: :nameless }]
         )
       end
     end
@@ -259,7 +259,7 @@ RSpec.describe Antlers::Lexer do
       end
 
       let(:sequence) do
-        [{ form_def: nil }, "\n  <button>Submit</button>\n", { form_end: 'level_1' }]
+        [{ form_def: nil }, "\n  <button>Submit</button>\n", { form_end: :nameless }]
       end
 
       it 'returns sequence' do

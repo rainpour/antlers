@@ -18,7 +18,7 @@ module Antlers
     end
 
     def lexeme(keywords:, **)
-      return { form_end: 'level_1' } unless keywords.key?('form:')
+      return { form_end: NAMELESS_END } unless keywords.key?('form:')
 
       definition = keywords['form:'].to_s
       action = definition[ACTION, 1]

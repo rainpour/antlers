@@ -3,6 +3,8 @@
 module Antlers
   module Lexeme
     KEYWORDS = [].freeze
+    # The name of an end tag that doesn't name its block, like <{ :if }>, which closes the innermost if.
+    NAMELESS_END = :nameless
 
     def match?(name: nil, keywords: {}, segment: nil) = false
 

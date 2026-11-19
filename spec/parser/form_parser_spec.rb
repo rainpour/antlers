@@ -10,7 +10,7 @@ RSpec.describe 'Antlers::Parser: Form' do
 
   context 'with basic form' do
     let(:sequence) do
-      [{ form_def: %('/submit') }, '<button>Submit</button>', { form_end: 'level_1' }]
+      [{ form_def: %('/submit') }, '<button>Submit</button>', { form_end: :nameless }]
     end
 
     let(:form_node) do
@@ -24,7 +24,7 @@ RSpec.describe 'Antlers::Parser: Form' do
 
   context 'without an action' do
     let(:sequence) do
-      [{ form_def: nil }, '<button>Submit</button>', { form_end: 'level_1' }]
+      [{ form_def: nil }, '<button>Submit</button>', { form_end: :nameless }]
     end
 
     it 'returns form node' do

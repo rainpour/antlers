@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'lexeme'
+
 module Antlers
   class AntlerNode
     attr_reader :name
@@ -15,8 +17,9 @@ module Antlers
       raise NotImplementedError
     end
 
+    # The name of the end tag that closes this node. Most don't name it, like <{ :if }>, while a slot's has its name.
     def end_name
-      'level_1'
+      Lexeme::NAMELESS_END
     end
 
     # Support sending an event to render_template hook when lowevent available. See lownode as an example implementation.

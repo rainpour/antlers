@@ -22,7 +22,7 @@ module Antlers
       end
 
       # TODO: Keep track of which for loop we're in to allow nested for loops.
-      { for_end: 'level_1' }
+      { for_end: NAMELESS_END }
     end
   end
 end

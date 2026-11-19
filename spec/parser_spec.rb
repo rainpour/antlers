@@ -62,7 +62,7 @@ RSpec.describe Antlers::Parser do
 
     context 'with for loop' do
       let(:sequence) do
-        [{ for_def: 'value', in: 'items' }, { var: 'value' }, { for_end: 'level_1' }]
+        [{ for_def: 'value', in: 'items' }, { var: 'value' }, { for_end: :nameless }]
       end
 
       let(:for_node) do
@@ -79,7 +79,7 @@ RSpec.describe Antlers::Parser do
 
       context 'with hash' do
         let(:sequence) do
-          [{ for_def: 'value', key: 'key', in: 'hash' }, { var: 'item' }, { for_end: 'level_1' }]
+          [{ for_def: 'value', key: 'key', in: 'hash' }, { var: 'item' }, { for_end: :nameless }]
         end
 
         let(:for_node) do

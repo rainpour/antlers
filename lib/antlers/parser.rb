@@ -70,7 +70,7 @@ module Antlers
     def opens_same_kind?(node, segment, end_name)
       return false unless segment.is_a?(Hash) && segment.key?(node.class::DEF_KEY)
 
-      end_name == 'level_1' || segment[node.class::DEF_KEY] == end_name
+      end_name == Lexeme::NAMELESS_END || segment[node.class::DEF_KEY] == end_name
     end
   end
 end

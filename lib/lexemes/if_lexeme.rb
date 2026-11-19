@@ -16,7 +16,7 @@ module Antlers
     def lexeme(keywords:, **)
       return { if_def: keywords['if:'] } if keywords.key?('if:')
 
-      { if_end: 'level_1' }
+      { if_end: NAMELESS_END }
     end
   end
 end
