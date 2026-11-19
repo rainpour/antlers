@@ -112,10 +112,11 @@ A GET form gets no token, as it shouldn't change anything.
 
 ### Anti-forgery tokens
 
-`Antlers.form_token` gives each POST form its `form_token` field. It's a proc that returns the token of the request being answered, or nil for no field:
+`Antlers.form_token` gives each POST form its `form_token` field. It's a proc that's given the render context's `:event` and `:routed_node`, the node the request was routed to, and returns the token, or nil for no field. The routed node can add to its response, like a cookie for the token:
 
 ```ruby
-Antlers.form_token = -> { MyTokens.for(MyApp.current_request) }
+Antlers.render(ast:, current_binding:, context: { event:, routed_node: })
+Antlers.form_token = ->(event:, routed_node:) { MyTokens.for(event.request, routed_node) }
 ```
 
 Raindeer sets it, and checks each form's token when it's posted.

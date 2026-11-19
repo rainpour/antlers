@@ -8,8 +8,9 @@ require_relative 'antlers/translations'
 
 module Antlers
   class << self
-    # Gives each POST form its hidden form_token field. A framework sets it, like Raindeer does, to a proc that returns
-    # the token of the request being answered, or nil for no field.
+    # Gives each POST form its hidden form_token field. A framework sets it, like Raindeer does, to a proc that's given
+    # the render context's event and routed node, the one the request was routed to, and returns the token, or nil for
+    # no field.
     attr_accessor :form_token
   end
 

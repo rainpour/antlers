@@ -34,7 +34,7 @@ module Antlers
       # Initialize and render each get the props they take, and the event if they take it.
       keywords = props.merge(event:)
       instance = klass.new(**Keywords.accepted(klass.instance_method(:initialize), keywords))
-      return instance.render_template(event:, parent_binding:, props:) if klass.respond_to?(:template) && klass.template
+      return instance.render_template(event:, parent_binding:, props:, context:) if klass.respond_to?(:template) && klass.template
 
       instance.render(**Keywords.accepted(instance.method(:render), keywords))
     end

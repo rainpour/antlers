@@ -31,7 +31,7 @@ module Antlers
 
       # Classes referenced via "<{ ChildNode }>" must implement class/instance render/render_template methods (See LowNode).
       if klass.respond_to?(:template) && klass.template
-        return instance.render_template(event:, parent_binding: current_binding, slot_node: self, props:)
+        return instance.render_template(event:, parent_binding: current_binding, slot_node: self, props:, context:)
       end
 
       # Without a class template, a component's own render method can receive its slot's rendered children as slot:.

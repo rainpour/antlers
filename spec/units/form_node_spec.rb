@@ -49,22 +49,22 @@ RSpec.describe Antlers::FormNode, 'with attributes and a token' do
   end
 
   it "gives a POST form a hidden field with Antlers.form_token's token" do
-    Antlers.form_token = -> { 'token-for-request' }
+    Antlers.form_token = ->(event:, routed_node:) { "token-for-#{event}-from-#{routed_node}" }
     form_node = described_class.new(name: %('/cart'), action: %('/cart'))
 
-    expect(form_node.render(current_binding: form_binding))
-      .to eq("<form action='/cart' method='POST'><input type='hidden' name='form_token' value='token-for-request'></form>")
+    expect(form_node.render(current_binding: form_binding, context: { event: 'request', routed_node: 'page' }))
+      .to eq("<form action='/cart' method='POST'><input type='hidden' name='form_token' value='token-for-request-from-page'></form>")
   end
 
   it 'gives a GET form no token' do
-    Antlers.form_token = -> { 'token' }
+    Antlers.form_token = ->(**) { 'token' }
     form_node = described_class.new(name: %('/search'), action: %('/search'), method: 'get')
 
     expect(form_node.render(current_binding: form_binding)).to eq("<form action='/search' method='GET'></form>")
   end
 
   it 'gives no field when there is no token, like outside a request' do
-    Antlers.form_token = -> {}
+    Antlers.form_token = ->(**) {}
     form_node = described_class.new(name: %('/cart'), action: %('/cart'))
 
     expect(form_node.render(current_binding: form_binding)).to eq("<form action='/cart' method='POST'></form>")
