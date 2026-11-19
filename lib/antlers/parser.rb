@@ -34,12 +34,23 @@ module Antlers
       node
     end
 
+    # Takes the segments up to the node's own end tag. A node of the same kind can open inside it, like an if in an if,
+    # and the end tags up to as many as have opened are theirs.
     def sub_branch(node:, sequence:, end_key:, end_name: nil)
       sub_sequence = []
+      depth = 0
 
-      until sequence.first.is_a?(Hash) && sequence.first[end_key] == end_name
+      loop do
         raise ParserError, "Missing end tag for #{node.class}" if sequence.empty?
 
+        segment = sequence.first
+        if end_tag?(segment, end_key, end_name)
+          break if depth.zero?
+
+          depth -= 1
+        elsif opens_same_kind?(node, segment, end_name)
+          depth += 1
+        end
         sub_sequence << sequence.shift
       end
 
@@ -47,6 +58,19 @@ module Antlers
       sequence.shift
 
       branch(node:, sequence: sub_sequence)
+    end
+
+    private
+
+    def end_tag?(segment, end_key, end_name)
+      segment.is_a?(Hash) && segment[end_key] == end_name
+    end
+
+    # Whether the segment opens a node that the same end tag closes, like any if, or a slot with the same name.
+    def opens_same_kind?(node, segment, end_name)
+      return false unless segment.is_a?(Hash) && segment.key?(node.class::DEF_KEY)
+
+      end_name == 'level_1' || segment[node.class::DEF_KEY] == end_name
     end
   end
 end
