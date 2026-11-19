@@ -239,6 +239,16 @@ RSpec.describe Antlers::Lexer do
       end
     end
 
+    context 'with a form node that has a method and attributes' do
+      let(:template) { %(<{ form: '/search' method: 'GET' class='search' data-role="find" }><{ :form }>) }
+
+      it 'returns sequence' do
+        expect(lexer.parse(template:)).to eq(
+          [{ form_def: %('/search'), method: 'GET', attributes: { 'class' => 'search', 'data-role' => 'find' } }, { form_end: 'level_1' }]
+        )
+      end
+    end
+
     context 'with a keyword that has no value' do
       let(:template) do
         <<~RUBY

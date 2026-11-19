@@ -35,3 +35,42 @@ RSpec.describe Antlers::FormNode do
     end
   end
 end
+
+RSpec.describe Antlers::FormNode, 'with attributes and a token' do
+  after { Antlers.form_token = nil }
+
+  let(:token_binding) { binding }
+
+  it 'renders its attributes, escaped' do
+    form_node = described_class.new(name: %('/cart'), action: %('/cart'), attributes: { 'class' => %(add "to" cart) })
+    html = %(<form action='/cart' method='POST' class='add &quot;to&quot; cart'></form>)
+
+    expect(form_node.render(current_binding: token_binding)).to eq(html)
+  end
+
+  it "gives a POST form a hidden field with Antlers.form_token's token, given the template's binding" do
+    Antlers.form_token = ->(current_binding) { "token-for-#{current_binding.class}" }
+    form_node = described_class.new(name: %('/cart'), action: %('/cart'))
+
+    expect(form_node.render(current_binding: token_binding))
+      .to eq("<form action='/cart' method='POST'><input type='hidden' name='form_token' value='token-for-Binding'></form>")
+  end
+
+  it 'gives a GET form no token' do
+    Antlers.form_token = ->(_current_binding) { 'token' }
+    form_node = described_class.new(name: %('/search'), action: %('/search'), method: 'get')
+
+    expect(form_node.render(current_binding: token_binding)).to eq("<form action='/search' method='GET'></form>")
+  end
+
+  it 'gives no field when there is no token, like outside a request' do
+    Antlers.form_token = ->(_current_binding) {}
+    form_node = described_class.new(name: %('/cart'), action: %('/cart'))
+
+    expect(form_node.render(current_binding: token_binding)).to eq("<form action='/cart' method='POST'></form>")
+  end
+
+  it 'only takes GET or POST' do
+    expect { described_class.new(name: %('/cart'), action: %('/cart'), method: 'DELETE') }.to raise_error(ArgumentError)
+  end
+end

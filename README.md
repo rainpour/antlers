@@ -97,16 +97,28 @@ Forms can be created in a compositional way, mixing both Antlers syntax with reg
 Antlers generates additional markup behind the scenes:
 - Sets the form's `action` to `/submit`
 - Sets the form's `method` to `POST`
-- Adds an anti-forgery token to prevent CSRF [UNRELEASED]
+- Adds a hidden `form_token` field, an anti-forgery token, when a framework like Raindeer sets `Antlers.form_token`
 
-Change the `POST` method to `GET` with:
+Change the `POST` method to `GET`, and give the form HTML attributes, with:
 
 ```ruby
-<{ form: '/search' method: 'GET' }>
-  <input type="search">
-  <input type="submit" value="search">
+<{ form: '/search' method: 'GET' class='search' }>
+  <input type="search" name="q">
+  <input type="submit" value="Search">
 <{ :form }>
 ```
+
+A GET form gets no token, as it shouldn't change anything.
+
+### Anti-forgery tokens
+
+`Antlers.form_token` gives each POST form its `form_token` field. It's a proc that's given the template's binding, so it can read the request, and returns the token, or nil for no field:
+
+```ruby
+Antlers.form_token = ->(current_binding) { MyTokens.for(current_binding.local_variable_get(:event)) }
+```
+
+Raindeer sets it, and checks each form's token when it's posted.
 
 ℹ️ Antlers provides other input helpers such as `<{ label: 'Label' }>`, `<{ search: :query }>` and `<{ submit: 'Search' }>`. [UNRELEASED]
 
