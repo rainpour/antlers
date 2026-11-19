@@ -8,8 +8,10 @@ module Antlers
       super(name:)
     end
 
-    # Render the children in the binding of the parent.
+    # Render the children in the binding of the parent. A component used without a slot, like <{ Card }>, has none.
     def render(parent_binding:, slot_node:, current_binding: nil, context: {})
+      return '' unless slot_node
+
       output = ''
 
       slot_node.children.each do |child|

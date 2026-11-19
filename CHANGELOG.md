@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - An end tag that doesn't name its block, like `<{ :if }>`, has the name `:nameless` in the lexer's segments, as `Lexeme::NAMELESS_END`, where it had `'level_1'`
 
+### Fixed
+
+- A component with a `<{ :slot }>` can be used without one, like `<{ Card }>`, and its slot renders nothing, where it raised `undefined method 'children' for nil`
+
 ## 1.5.4
 
 ### Fixed
