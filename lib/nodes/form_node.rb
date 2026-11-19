@@ -29,7 +29,7 @@ module Antlers
 
     def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       output = +"<form action='#{action(current_binding:)}' method='#{@method}'#{@attributes}>"
-      output << token_field(current_binding:)
+      output << token_field
 
       @children.each do |child|
         output << (child.render(current_binding:, parent_binding:, slot_node:, context:) || '')
@@ -46,10 +46,10 @@ module Antlers
       evaluate(value: @action, current_binding:)
     end
 
-    def token_field(current_binding:)
+    def token_field
       return '' unless @method == 'POST' && Antlers.form_token
 
-      token = Antlers.form_token.call(current_binding)
+      token = Antlers.form_token.call
       return '' unless token
 
       "<input type='hidden' name='#{TOKEN_FIELD}' value='#{CGI.escapeHTML(token)}'>"

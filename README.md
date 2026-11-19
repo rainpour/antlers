@@ -112,10 +112,10 @@ A GET form gets no token, as it shouldn't change anything.
 
 ### Anti-forgery tokens
 
-`Antlers.form_token` gives each POST form its `form_token` field. It's a proc that's given the template's binding, so it can read the request, and returns the token, or nil for no field:
+`Antlers.form_token` gives each POST form its `form_token` field. It's a proc that returns the token of the request being answered, or nil for no field:
 
 ```ruby
-Antlers.form_token = ->(current_binding) { MyTokens.for(current_binding.local_variable_get(:event)) }
+Antlers.form_token = -> { MyTokens.for(MyApp.current_request) }
 ```
 
 Raindeer sets it, and checks each form's token when it's posted.
