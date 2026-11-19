@@ -6,15 +6,13 @@ require_relative '../modules/props'
 require_relative '../modules/variables'
 
 module Antlers
-  # A form, posted to its action. A POST form gets a hidden form_token field from Antlers.form_token, when a framework
-  # sets it, so a form posted from another site can be turned away.
+  # A form, posted to its action with POST, or GET, and its HTML attributes.
   class FormNode < BranchNode
     include Props
     include Variables
 
     DEF_KEY = :form_def
     END_KEY = :form_end
-    TOKEN_FIELD = 'form_token'
     METHODS = %w[GET POST].freeze
 
     def initialize(name:, action: nil, method: 'POST', attributes: {}, props: [], children: []) # rubocop:disable Metrics/ParameterLists
@@ -29,7 +27,6 @@ module Antlers
 
     def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       output = +"<form action='#{action(current_binding:)}' method='#{@method}'#{@attributes}>"
-      output << token_field(event: context[:event], routed_node: context[:routed_node])
 
       @children.each do |child|
         output << (child.render(current_binding:, parent_binding:, slot_node:, context:) || '')
@@ -44,15 +41,6 @@ module Antlers
       return if @action.nil?
 
       evaluate(value: @action, current_binding:)
-    end
-
-    def token_field(event:, routed_node:)
-      return '' unless @method == 'POST' && Antlers.form_token
-
-      token = Antlers.form_token.call(event:, routed_node:)
-      return '' unless token
-
-      "<input type='hidden' name='#{TOKEN_FIELD}' value='#{CGI.escapeHTML(token)}'>"
     end
 
     class << self

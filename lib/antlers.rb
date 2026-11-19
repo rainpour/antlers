@@ -7,13 +7,6 @@ require_relative 'antlers/parser'
 require_relative 'antlers/translations'
 
 module Antlers
-  class << self
-    # Gives each POST form its hidden form_token field. A framework sets it, like Raindeer does, to a proc that's given
-    # the render context's event and routed node, the one the request was routed to, and returns the token, or nil for
-    # no field.
-    attr_accessor :form_token
-  end
-
   module_function
 
   DEFAULT_ELEMENTS = %i[root html form for if solo slot yield var].freeze

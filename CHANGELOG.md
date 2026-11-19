@@ -9,10 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `Antlers.form_token`, which gives each POST form a hidden `form_token` field, an anti-forgery token a framework like Raindeer makes and checks. It's given the render context's `event:` and `routed_node:`, and components pass their context on
 - A form's HTML attributes, like `<{ form: '/cart' class='add-to-cart' }>`
 
 ### Fixed
+
+- Components get the render context of the template they're in
 
 - `method: 'GET'` and anything else after a form's action went into its action, so `<{ form: '/search' method: 'GET' }>` posted to `/search' method: 'GET`
 
