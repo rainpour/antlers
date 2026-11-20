@@ -12,10 +12,10 @@ module Antlers
     def render(parent_binding:, slot_node:, current_binding: nil, context: {})
       return '' unless slot_node
 
-      output = ''
+      output = +''
 
       slot_node.children.each do |child|
-        output += child.render(current_binding: parent_binding, parent_binding:, slot_node:, context:) || ''
+        output << (child.render(current_binding: parent_binding, parent_binding:, slot_node:, context:) || '')
       end
 
       output
