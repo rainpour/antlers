@@ -66,6 +66,11 @@ end
   <{ UserNode user=@user }>
 <{ :if }>
 
+# A blank string, like '' or ' ', is false, so a field left empty shows nothing.
+<{ if: @user.website }>
+  <a href="{@user.website}">{@user.website}</a>
+<{ :if }>
+
 # Directive. [UNRELEASED]
 <{ UserNode user=@user if: @user.happy? }>
 ```

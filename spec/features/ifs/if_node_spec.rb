@@ -27,5 +27,19 @@ RSpec.describe RBX::IfNode do
         expect(if_node).to eq(nil)
       end
     end
+
+    context 'when a blank string' do
+      it 'returns nil, as for false' do
+        expect([described_class.render(event: nil, boolean: ''), described_class.render(event: nil, boolean: " \n ")]).to eq([nil, nil])
+      end
+    end
+
+    context 'when a string with words' do
+      let(:boolean) { 'Rye' }
+
+      it 'returns response' do
+        expect(if_node.response.body.read).to eq('<p>Yes</p>')
+      end
+    end
   end
 end

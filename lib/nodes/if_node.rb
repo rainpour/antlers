@@ -21,13 +21,22 @@ module Antlers
     def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       output = +''
 
-      if evaluate(value: @value, current_binding:, escape: false)
+      if shown?(evaluate(value: @value, current_binding:, escape: false))
         @children.each do |child|
           output << (child.render(current_binding:, parent_binding:, slot_node:, context:) || '')
         end
       end
 
       output
+    end
+
+    private
+
+    # Whether its value shows its children: like Ruby's truthiness, except that a blank string, like '' or ' ', is false.
+    def shown?(value)
+      return value.strip != '' if value.is_a?(String)
+
+      value
     end
 
     class << self
