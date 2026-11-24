@@ -9,13 +9,15 @@ module Antlers
     end
 
     # Render the children in the binding of the parent. A component used without a slot, like <{ Card }>, has none.
+    # They render with the slot of the template they're written in, which may pass its own slot on with a <{ :slot }>.
     def render(parent_binding:, slot_node:, current_binding: nil, context: {})
       return '' unless slot_node
 
       output = +''
 
       slot_node.children.each do |child|
-        output << (child.render(current_binding: parent_binding, parent_binding:, slot_node:, context:) || '')
+        output << (child.render(current_binding: parent_binding, parent_binding: slot_node.parent_binding,
+                                slot_node: slot_node.slot_node, context:) || '')
       end
 
       output
