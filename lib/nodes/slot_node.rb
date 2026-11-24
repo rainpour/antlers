@@ -23,9 +23,12 @@ module Antlers
 
     def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       props = evaluate_props(props: @props, current_binding:)
-      event = possible_render_event(props:, current_binding:)
-
       klass = class_constant(namespace: @namespace&.split('::') || [], name:)
+      event = possible_render_event(props:, current_binding:)
+      record_render(klass) { render_slot_node(klass:, props:, event:, current_binding:, context:) }
+    end
+
+    def render_slot_node(klass:, props:, event:, current_binding:, context:)
       keywords = props.merge(event:)
       instance = klass.new(**Keywords.accepted(klass.instance_method(:initialize), keywords))
 

@@ -32,6 +32,13 @@ module Antlers
       Low::Events::RenderEvent.new(action: :render, props:, **carried.slice(*Low::Events::RenderEvent.members))
     end
 
+    # Renders the node inside a NodeEvent when lowevent has one so the request's tree times it with the events it causes.
+    def record_render(node, &)
+      return yield unless defined?(Low::Events::NodeEvent)
+
+      Low::Events::NodeEvent.new(node:).record(&)
+    end
+
     # The parent node's event (a RouteEvent or RenderEvent) is the "event" local variable on its binding.
     def parent_event(current_binding:)
       return unless current_binding&.local_variable_defined?(:event)

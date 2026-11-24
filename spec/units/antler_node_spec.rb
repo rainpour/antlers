@@ -34,4 +34,21 @@ RSpec.describe Antlers::AntlerNode do
       expect(node.possible_render_event(props: {})).to be_nil
     end
   end
+
+  describe '#record_render' do
+    it "renders inside a NodeEvent keyed by the node so its time goes in the request's tree" do
+      recorded = []
+      allow(Low::Events::NodeEvent).to receive(:new).and_wrap_original do |original, **args|
+        original.call(**args).tap { |event| recorded << event.key }
+      end
+
+      expect([node.record_render(String) { 'html' }, recorded]).to eq(['html', [String]])
+    end
+
+    it 'renders without a NodeEvent when lowevent is not loaded' do
+      hide_const('Low::Events::NodeEvent')
+
+      expect(node.record_render(String) { 'html' }).to eq('html')
+    end
+  end
 end

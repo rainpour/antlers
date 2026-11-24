@@ -27,16 +27,17 @@ module Antlers
     # Classes referenced via "<{ MyNode }>" must implement class/instance and render/render_template methods (See lownode).
     def render(current_binding: nil, parent_binding: nil, slot_node: nil, context: {})
       props = evaluate_props(props: @props, current_binding:)
+      klass = node_class || raise(NameError, "uninitialized constant #{@name}")
       event = possible_render_event(props:, current_binding:)
 
-      klass = node_class || raise(NameError, "uninitialized constant #{@name}")
-
       # Initialize and render each get the props they take, and the event if they take it.
-      keywords = props.merge(event:)
-      instance = klass.new(**Keywords.accepted(klass.instance_method(:initialize), keywords))
-      return instance.render_template(event:, parent_binding:, props:, context:) if klass.respond_to?(:template) && klass.template
+      record_render(klass) do
+        keywords = props.merge(event:)
+        instance = klass.new(**Keywords.accepted(klass.instance_method(:initialize), keywords))
+        next instance.render_template(event:, parent_binding:, props:, context:) if klass.respond_to?(:template) && klass.template
 
-      instance.render(**Keywords.accepted(instance.method(:render), keywords))
+        instance.render(**Keywords.accepted(instance.method(:render), keywords))
+      end
     end
 
     class << self
