@@ -7,9 +7,9 @@ PATH
 PATH
   remote: ../lowevent
   specs:
-    lowevent (0.8.4)
+    lowevent (0.8.6)
       lowtype (~> 1.4)
-      observers (~> 1.1, >= 1.1.1)
+      observers (~> 1.1, >= 1.1.3)
       protocol-http
       providers
 
@@ -22,7 +22,7 @@ PATH
 PATH
   remote: ../lownode
   specs:
-    lownode (0.5.11)
+    lownode (0.5.14)
       antlers (~> 1.5, >= 1.5.3)
       lowevent
       lowtype (~> 1.6)
@@ -37,7 +37,7 @@ PATH
 PATH
   remote: .
   specs:
-    antlers (1.5.7)
+    antlers (1.5.8)
       lowkey (>= 0.7.0)
       plugs
 
@@ -63,7 +63,7 @@ GEM
       expressions (~> 0.1)
       lowkey (>= 0.7.1)
       trees (>= 0.4)
-    observers (1.1.1)
+    observers (1.1.3)
     ostruct (0.6.3)
     parallel (2.3.0)
     parser (3.3.14.0)
@@ -144,7 +144,7 @@ DEPENDENCIES
   rubocop
 
 CHECKSUMS
-  antlers (1.5.7)
+  antlers (1.5.8)
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   bundler (4.0.18) sha256=02d9a17429de1847b4e0c9f27a9ee4b20c0a74c0a641b4e77195d6019e3618ac
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
@@ -157,11 +157,11 @@ CHECKSUMS
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  lowevent (0.8.4)
+  lowevent (0.8.6)
   lowkey (0.7.4)
-  lownode (0.5.11)
+  lownode (0.5.14)
   lowtype (1.7.0) sha256=7dd594bbf3fbf9302b426f0f78d89e6b824a3deac1afa5d1dc0cc9412c703810
-  observers (1.1.1) sha256=1115d9e7bbe6a687e8189baf4914338bab3ebf31b8578937f7233ecb02263677
+  observers (1.1.3) sha256=b6e59f95ce29ee5f8b293168c4a7434b515580f6469278acb9462374d1b576ee
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.14.0) sha256=62f8f76af7b919425ee2d811880e9dcb8011ab40bfd59970dfb583141697e58f
