@@ -13,6 +13,7 @@ module Antlers
     module_function
 
     def load(translations)
+      @locales = nil
       @translations = (translations || {}).to_h do |locale, mappings|
         [locale.to_s, (mappings || {}).to_h { |source, translation| [source.to_s, translation.to_s] }.freeze]
       end.freeze
@@ -22,8 +23,9 @@ module Antlers
       @translations ||= {}.freeze
     end
 
+    # Worked out once for each set of translations, as every request negotiates its locale with them.
     def locales
-      translations.keys - [SYMBOLS]
+      @locales ||= (translations.keys - [SYMBOLS]).freeze
     end
 
     # Fiber storage is inherited by child fibers, so a locale set for a request applies to everything it renders.
