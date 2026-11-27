@@ -7,7 +7,7 @@ PATH
 PATH
   remote: ../lowevent
   specs:
-    lowevent (0.8.9)
+    lowevent (0.8.10)
       lowtype (~> 1.4)
       observers (~> 1.1, >= 1.1.3)
       protocol-http
@@ -16,7 +16,7 @@ PATH
 PATH
   remote: ../lowkey
   specs:
-    lowkey (0.7.4)
+    lowkey (0.7.5)
       prism
 
 PATH
@@ -37,7 +37,7 @@ PATH
 PATH
   remote: .
   specs:
-    antlers (1.5.10)
+    antlers (1.5.11)
       lowkey (>= 0.7.0)
       plugs
 
@@ -54,11 +54,11 @@ GEM
       prism (>= 1.3.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (3.1.0)
+    json (3.2.0)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
-    lowtype (1.7.0)
+    lowtype (1.7.1)
       dirload
       expressions (~> 0.1)
       lowkey (>= 0.7.1)
@@ -72,6 +72,7 @@ GEM
     pp (0.6.4)
       prettyprint
     prettyprint (0.2.1)
+    prism (2.1.0-arm64-darwin)
     prism (2.1.0-x86_64-darwin)
     protocol-http (0.72.1)
     providers (0.6.2)
@@ -104,7 +105,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.8)
-    rubocop (1.92.3)
+    rubocop (1.93.0)
       json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -112,10 +113,10 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.11.3, < 3.0)
-      rubocop-ast (>= 1.49.0, < 2.0)
+      rubocop-ast (>= 1.54.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.53.0)
+    rubocop-ast (1.54.0)
       ast (~> 2.4)
       parser (>= 3.3.7.2)
       prism (>= 1.7)
@@ -128,6 +129,7 @@ GEM
     unicode-emoji (4.3.0)
 
 PLATFORMS
+  arm64-darwin-25
   x86_64-darwin-25
 
 DEPENDENCIES
@@ -144,7 +146,7 @@ DEPENDENCIES
   rubocop
 
 CHECKSUMS
-  antlers (1.5.10)
+  antlers (1.5.11)
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   bundler (4.0.18) sha256=02d9a17429de1847b4e0c9f27a9ee4b20c0a74c0a641b4e77195d6019e3618ac
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
@@ -153,14 +155,14 @@ CHECKSUMS
   expressions (0.4.0) sha256=83470229d23c091c1d054b45b0cc850cf913d9daf92abc1de4f4cc5d4b4c7aef
   io-console (0.9.5) sha256=83dd9bbf4c4680416629245b39cd4212eb5f4d9a4ea91804870c1f6b846414d5
   irb (1.19.0) sha256=55ee56acbdd6c9fe06a2e6909f46a24e5c41f45f16906bab04e8049cf46f1d27
-  json (3.1.0) sha256=3ce7ccf8fde58960177a3a756c31f292a4c1e1dedee884547096a5b0604e3bd8
+  json (3.2.0) sha256=4a4e222a9ee6ffb296ab3171b6b39d85fec83afc4e7b57eee17edf68c74aec87
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  lowevent (0.8.9)
-  lowkey (0.7.4)
+  lowevent (0.8.10)
+  lowkey (0.7.5)
   lownode (0.5.14)
-  lowtype (1.7.0) sha256=7dd594bbf3fbf9302b426f0f78d89e6b824a3deac1afa5d1dc0cc9412c703810
+  lowtype (1.7.1) sha256=ea35219590872eae0d4b1ef04ad02cc6f00dc46491d9121d8ec93c5dbab9125d
   observers (1.1.3) sha256=b6e59f95ce29ee5f8b293168c4a7434b515580f6469278acb9462374d1b576ee
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
@@ -168,6 +170,7 @@ CHECKSUMS
   plugs (0.4.1)
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   prettyprint (0.2.1) sha256=d555d57ea6d7cf001d4774b693546a6bd88bec1e778ddffb5c60b68ceec4b7d4
+  prism (2.1.0-arm64-darwin) sha256=2d0c2e3e011cfd89c041940907d3ff3def379d7b0f2ba158d1d42238e8ad8afc
   prism (2.1.0-x86_64-darwin) sha256=6c645d8e6afc742956c7518220ce5106367727c4d9980ac9ab386d55004ddab4
   protocol-http (0.72.1) sha256=5b0d718fb5d45ebc2690bf204977bb62d6550773e55c417ee9aa61be032876f3
   providers (0.6.2) sha256=23b0c4aff06d389612751debca316f30a946c9a4afe2e4175d2878f4284c9c8b
@@ -183,8 +186,8 @@ CHECKSUMS
   rspec-expectations (3.13.6) sha256=bf538ca6d367ff5b0d85a87fdb5c0c6038f2cd1308a0eeba07476caa02d22f35
   rspec-mocks (3.13.9) sha256=ea5c7ff3054a6098ca6039aacef80aec69d5a8a3ef80be8fc88337359b672a30
   rspec-support (3.13.8) sha256=e4160030309b7e3e9d9863dfe720a35dfcc577162f5402cd68fc8c5258a0ffd6
-  rubocop (1.92.3) sha256=fd77feac46e8e91c3a534f868a1702c59f5bf8173515fd00a3c6ce1198672ff6
-  rubocop-ast (1.53.0) sha256=027984d28485d6502ae4c72f9341080f54f538599f5dbb54f81875a4ddcad574
+  rubocop (1.93.0) sha256=cb675628d17fe21dfab42f84848040ca2785c22ee4df41c888bfc404f3e74684
+  rubocop-ast (1.54.0) sha256=11f7cadec54e593e905b1bb78f2b28bdd4b8e13b34cb82fe49c876e3dd5008c1
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   trees (0.4.0) sha256=7ba5e7ff51475044fe8016220f147dd62af4ac90d45c9017cd194596c4357baf
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
