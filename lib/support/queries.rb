@@ -2,6 +2,7 @@
 
 module Antlers
   module Queries
+    # Written out in read and read_path too, as "when *BASIC_TYPES" makes a new array on every call.
     BASIC_TYPES = [Symbol, Numeric, TrueClass, FalseClass, NilClass].freeze
     ENUMERABLE_ALLOWLIST = %w[first last size].freeze
     STRING_ALLOWLIST = %w[upcase downcase].freeze
@@ -26,9 +27,20 @@ module Antlers
           when Hash then read_hash(current_value, key:)
           when Array then read_array(current_value, key:)
           when String then read_string(current_value, key:)
-          when *BASIC_TYPES then nil
+          when Symbol, Numeric, TrueClass, FalseClass, NilClass then nil
           else current_value.public_send(key.to_sym)
           end
+        end
+      end
+
+      # One step of a path, as read_path reads it, for a compiled template, which knows each key and its symbol up front.
+      def read(value, key, symbol)
+        case value
+        when Hash then read_hash(value, key:)
+        when Array then read_array(value, key:)
+        when String then read_string(value, key:)
+        when Symbol, Numeric, TrueClass, FalseClass, NilClass then nil
+        else value.public_send(symbol)
         end
       end
 

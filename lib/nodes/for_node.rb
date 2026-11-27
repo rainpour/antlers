@@ -38,6 +38,13 @@ module Antlers
       output
     end
 
+    def compile(compiler)
+      names = [@value, @key].compact
+      return super unless names.all? { compiler.local_name?(it) }
+
+      compiler.for_loop(items: @items, names:) { @children.each { it.compile(compiler) } }
+    end
+
     class << self
       def match?(segment:)
         segment[DEF_KEY]

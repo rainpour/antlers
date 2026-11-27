@@ -27,6 +27,13 @@ module Antlers
       (@raw ? result : CGI.escapeHTML(result.to_s)).to_s
     end
 
+    # A translated string or symbol renders itself, as it reads the locale as it renders.
+    def compile(compiler)
+      return super if @translatable
+
+      compiler.output(@value, raw: @raw)
+    end
+
     class << self
       def match?(segment:)
         segment[:var] || segment[:raw_var]

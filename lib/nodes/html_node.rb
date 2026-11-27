@@ -14,6 +14,10 @@ module Antlers
       @html
     end
 
+    def compile(compiler)
+      compiler.html(@html)
+    end
+
     class << self
       def match?(segment:)
         segment.is_a?(String)

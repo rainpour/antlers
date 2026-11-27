@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+- A template is compiled to Ruby on its first render, like ERB, rather than walking its nodes on every render. HTML, variables, fors and ifs run as plain Ruby, and a for's values are Ruby locals rather than locals set on the binding. Components and other nodes still render themselves. A list of 10 users renders about 4 times faster, with a third of the objects
+- Reading a value's path no longer makes a new array for each key
+
 ## 1.5.10
 
 ### Changed

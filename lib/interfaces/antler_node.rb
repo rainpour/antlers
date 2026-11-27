@@ -22,6 +22,11 @@ module Antlers
       Lexeme::NAMELESS_END
     end
 
+    # Adds the node to a compiled template. A node renders itself unless it compiles to Ruby, like HTML and variables.
+    def compile(compiler)
+      compiler.delegate(self)
+    end
+
     # Support sending an event to render_template hook when lowevent available. See lownode as an example implementation.
     # The parent's params and request are carried over, for the members the installed RenderEvent has.
     def possible_render_event(props:, current_binding: nil)

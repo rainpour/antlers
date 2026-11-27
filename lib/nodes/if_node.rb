@@ -30,6 +30,12 @@ module Antlers
       output
     end
 
+    def compile(compiler)
+      compiler.emit("if Antlers::Compiler::Runtime.shown?(#{compiler.expression(@value)})")
+      @children.each { it.compile(compiler) }
+      compiler.emit('end')
+    end
+
     private
 
     # Whether its value shows its children: like Ruby's truthiness, except that a blank string, like '' or ' ', is false.
